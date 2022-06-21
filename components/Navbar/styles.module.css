@@ -1,0 +1,4 @@
+.shadow {
+  box-shadow: 3px -2px 7px 3px #80808066;
+  transition: box-shadow 0.2s ease-in;
+}
