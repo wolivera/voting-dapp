@@ -39,7 +39,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className="navbar-center">
-        <a className="normal-case text-xl gradient">Zircon Voting</a>
+        <a className="normal-case text-xl gradient">ZVoting</a>
       </div>
       <div className="navbar-end">
         <Wallet />
