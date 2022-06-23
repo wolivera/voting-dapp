@@ -1,14 +1,17 @@
 import type { NextPage } from "next";
-import Content from "../components/Content";
+import Body from "../components/Body";
+import Home from "../components/Home";
 import Navbar from "../components/Navbar";
 
-const Home: NextPage = () => {
+const Index: NextPage = () => {
   return (
     <>
       <Navbar />
-      <Content />
+      <Body>
+        <Home />
+      </Body>
     </>
   );
 };
 
-export default Home;
+export default Index;

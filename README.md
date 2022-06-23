@@ -1,31 +1,15 @@
-# ZVoting
+# Basic Sample Hardhat Project
 
-This project aims to develop the Frontend piece for a Voting Descentralized Application, or VotingDapp for short. It uses web3 within a NextJS/React app to interact with Metamask and
-the Smart Contracts. This is the result of a series of 
+This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
 
-## Tech Stack
+Try running some of the following tasks:
 
-NextJs with Typscript + TailwindCss
-
-## Setup
-
-This project uses node version "16.14.2"
-
-Install Node Version Manager (nvm) to move between versions;
-
-### Install yarn
-
-`npm i -g yarn`
-
-### Install dependencies
-
-`yarn install`
-
-### Run the project
-
-In dev mode with `yarn run dev`
-
-#### Automated deploys
-
-This site is connected to Netlify. Automatic deploys are made by running `git push`.
-
+```shell
+npx hardhat accounts
+npx hardhat compile
+npx hardhat clean
+npx hardhat test
+npx hardhat node
+node scripts/sample-script.js
+npx hardhat help
+```

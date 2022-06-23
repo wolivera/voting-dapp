@@ -9,10 +9,35 @@ const Wallet = () => {
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   const { data: balanceData } = useBalance({
-    addressOrName: accountData?.address
-  })
+    addressOrName: accountData?.address,
+  });
 
   const isMounted = useIsMounted();
+  // const [requested, setRequested] = useState(false);
+
+  // useEffect(() => {
+  //   const checkNetwork = async () => {
+  //     setRequested(true);
+  //     if (window.ethereum) {
+  //       const currentChainId = await window.ethereum.request({
+  //         method: "eth_chainId",
+  //       });
+
+  //       if (currentChainId !== connectors[0].chains[0].name && !requested) {
+  //         throw Error("Wrong Network");
+  //       }
+  //     }
+  //   };
+
+  //   if (accountData?.address) {
+  //     checkNetwork().catch(async () => {
+  //       if (!requested) {
+  //         const res = await changeNetwork(connectors[0].chains[0]);
+  //         res && connect(connectors[0]);
+  //       }
+  //     });
+  //   }
+  // }, [accountData]);
 
   return (
     <div>
@@ -24,10 +49,15 @@ const Wallet = () => {
             </span>
             <div className="stat">
               <div className="stat-title">Balance</div>
-              <div className="stat-value text-xl text-primary">{parseFloat(balanceData?.formatted || '0').toFixed(3)} {balanceData?.symbol}</div>
+              <div className="stat-value text-xl text-primary">
+                {parseFloat(balanceData?.formatted || "0").toFixed(3)}{" "}
+                {balanceData?.symbol}
+              </div>
             </div>
           </div>
-          <button className="btn mr-2" onClick={() => disconnect()}>Desconectar Wallet</button>
+          <button className="btn mr-2" onClick={() => disconnect()}>
+            Disconnect Wallet
+          </button>
         </div>
       ) : (
         <div>
@@ -37,7 +67,7 @@ const Wallet = () => {
               connect(connectors[0]);
             }}
           >
-            Conectar Wallet
+            Connect Wallet
           </button>
         </div>
       )}
