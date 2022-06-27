@@ -1,16 +1,16 @@
 import { useQuery } from "react-query";
-import useVotingContract from "../../hooks/useVotingContract";
+import useMainVotingContract from "../../hooks/useMainVotingContract";
 
 const Details = () => {
-  const contract = useVotingContract();
-  const { data: name } = useQuery(["name", { chainId: contract.chainId }], () =>
-    contract.getName()
-  );
-  const { data: description } = useQuery(
-    ["description", { chainId: contract.chainId }],
-    () => contract.getDescription()
-  );
-  console.log("name i s", description);
+  const contract = useMainVotingContract();
+  // const { data: name } = useQuery(["name", { chainId: contract.chainId }], () =>
+  //   contract.getName()
+  // );
+  // const { data: description } = useQuery(
+  //   ["description", { chainId: contract.chainId }],
+  //   () => contract.getDescription()
+  // );
+  // console.log("name i s", description);
 
   const options = [
     {
@@ -33,8 +33,8 @@ const Details = () => {
   return (
     <div className="text-center flex justify-center items-center flex-col m-auto mt-[60px]">
       <div className="prose">
-        <h1>{name}</h1>
-        <h4>{description}</h4>
+        {/* <h1>{name}</h1>
+        <h4>{description}</h4> */}
       </div>
       <div className="flex mt-8">
         {options.map((o) => (

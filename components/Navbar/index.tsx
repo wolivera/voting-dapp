@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Wallet from "../Wallet";
 
 const Navbar = () => {
@@ -26,12 +27,12 @@ const Navbar = () => {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a href="https://zircon.tech" target={"_blank"}>
+              <a href="/" target={"_blank"}>
                 Homepage
               </a>
             </li>
             <li>
-              <a href="https://zircon.tech" target={"_blank"}>
+              <a href="https://github.com/wolivera/voting-dapp.git" target={"_blank"}>
                 About
               </a>
             </li>
@@ -39,12 +40,12 @@ const Navbar = () => {
         </div>
       </div>
       <div className="navbar-center">
-        <a className="normal-case text-xl gradient">ZVoting</a>
+        <Link href="/"><a className="normal-case text-xl gradient">ZVoting</a></Link>
       </div>
       <div className="navbar-end">
         <Wallet />
-        <button className="btn btn-ghost btn-circle">
-          <a href="https://github.com/zircon-tech/VotingDapp-Frontend" target={"_blank"}>
+        <button className="btn btn-ghost btn-circle ml-2">
+          <a href="https://github.com/wolivera/voting-dapp.git" target={"_blank"}>
             <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

@@ -70,6 +70,43 @@
       "artifacts": [
         "Voting"
       ]
+    },
+    "/Users/williams/Documents/Zircon/VotingDapp-Frontend/contracts/MainVoting.sol": {
+      "lastModificationDate": 1656100144313,
+      "contentHash": "96f4a606441e3ad0907cd92ae9c92328",
+      "sourceName": "contracts/MainVoting.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Voting.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "MainVoting"
+      ]
     }
   }
 }

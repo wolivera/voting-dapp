@@ -14,12 +14,14 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const VotingContract = await hre.ethers.getContractFactory("Voting");
-  const contract = await VotingContract.deploy('Cual es el mejor dia de la semana?', 'Veamos cual es el mejor dia de la semana para la gente de Zircon', 7);
+  const MainVotingContract = await hre.ethers.getContractFactory("MainVoting");
+
+  const contract = await MainVotingContract.deploy();
 
   await contract.deployed();
+  await contract.createBallot("What's the best day of the week?", "Let's see what's the best day of the week!");
 
-  console.log("Contract deployed to:", contract.address);
+  console.log("Main Voting contract deployed to: ", contract.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
