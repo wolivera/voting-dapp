@@ -1,47 +1,52 @@
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
-import useMainVotingContract from "../../hooks/useMainVotingContract";
+import useVotingContract from "../../hooks/useVotingContract";
+import { LoadingCover } from "../Loading";
+import NewOption from "./NewOption";
 
-const Details = () => {
-  const contract = useMainVotingContract();
-  // const { data: name } = useQuery(["name", { chainId: contract.chainId }], () =>
-  //   contract.getName()
-  // );
-  // const { data: description } = useQuery(
-  //   ["description", { chainId: contract.chainId }],
-  //   () => contract.getDescription()
-  // );
-  // console.log("name i s", description);
+interface Params {
+  id: string;
+}
 
-  const options = [
-    {
-      id: 1,
-      name: "Lunes",
-      voteCount: 2,
-    },
-    {
-      id: 1,
-      name: "Martes",
-      voteCount: 0,
-    },
-    {
-      id: 1,
-      name: "Miercoles",
-      voteCount: 4,
-    },
-  ];
+const Details = ({ id }: Params) => {
+  console.log("params", id);
+
+  const contract = useVotingContract(id);
+  const { data: voting } = useQuery(
+    ["details", { chainId: contract.chainId }],
+    () => contract.getDetails()
+  );
+  console.log("voting is ", voting);
+  console.log("id", id);
+
+  if (!voting) return <LoadingCover />;
 
   return (
-    <div className="text-center flex justify-center items-center flex-col m-auto mt-[60px]">
+    <div className="text-center flex justify-center items-center flex-col m-auto mt-[60px] relative">
       <div className="prose">
-        {/* <h1>{name}</h1>
-        <h4>{description}</h4> */}
+        <h1>{voting?.name}</h1>
+        <h4>{voting?.description}</h4>
       </div>
+
+      {!voting?.options?.length && (
+        <div className="mt-8">
+          <label htmlFor="new-option" className="btn modal-button">
+            Add Option
+          </label>
+          <input type="checkbox" id="new-option" className="modal-toggle" />
+          <NewOption />
+        </div>
+      )}
       <div className="flex mt-8">
-        {options.map((o) => (
+        {voting?.options?.map((o) => (
           <div className="card w-96 bg-base-100 shadow-xl mr-3">
             <div className="card-body">
               <h2 className="card-title">{o.name}</h2>
-              <div>Votes<div className="ml-3 badge badge-primary">{o.voteCount}</div></div>
+              <div>
+                Votes
+                <div className="ml-3 badge badge-primary">{o.voteCount}</div>
+              </div>
               <div className="card-actions justify-end">
                 <button className="btn btn-primary">Vote</button>
               </div>

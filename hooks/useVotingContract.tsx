@@ -6,12 +6,12 @@ import { BigNumber, utils } from "ethers";
 import VotingABI from "../artifacts/contracts/Voting.sol/Voting.json";
 
 export interface Voting {
-  id: number;
   name: string;
   description?: string;
+  options?: any[];
 }
 
-const useVotingContract = (ballots: any) => {
+const useVotingContract = (address: string) => {
   // An ethers.Signer instance associated with the signed-in wallet.
   // https://docs.ethers.io/v5/api/signer/
   const signer = useSigner();
@@ -26,37 +26,34 @@ const useVotingContract = (ballots: any) => {
   // We also pass in the signer if there is a signed in wallet, or if there's
   // no signed in wallet then we'll pass in the connected provider.
 
-  const getContract = (address: string) => {
-    return useContract({
-      addressOrName: address,
-      contractInterface: VotingABI.abi,
-      signerOrProvider: signer.data || provider,
-    });
-  };
-
-  console.log('use?', ballots);
-  const contract2 = useContract({
-    addressOrName: ballots?.[0],
+  const contract = useContract({
+    addressOrName: address || '0x0000000000000000000000000000000000000000',
     contractInterface: VotingABI.abi,
     signerOrProvider: signer.data || provider,
   });
 
-  const getVotingList = async (addresses: string[] = []): Promise<Voting[]> => {
-    const votingList = [];
-    console.log("add", addresses);
-    for (let i = 0; i < addresses.length; i++) {
-      console.log("got contract");
-      const name = await contract2.name();
-      console.log("name", name);
-      // console.log('contract', contract);
-      votingList.push({ id: i, name });
+  const getDetails = async (): Promise<Voting> => {
+    const name = await contract.name();
+    const description = await contract.description();
+    const items = await contract.optionsCount();
+    const count = parseInt(items.toHexString());
+    const options = [];
+
+    for (let i = 0; i < count; i++) {
+      const item = await contract.votingOptions(i);
+      options.push(item);
     }
-    return votingList;
+
+    return {
+      name,
+      description,
+      options,
+    }
   };
 
   return {
     chainId: provider.network?.chainId,
-    getVotingList,
+    getDetails,
   };
 };
 

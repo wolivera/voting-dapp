@@ -5,12 +5,10 @@ import { BigNumber, utils } from "ethers";
 // The hardhat compiler writes this file to artifacts during compilation.
 import MainVotingABI from "../artifacts/contracts/MainVoting.sol/MainVoting.json";
 
-export interface Comment {
-  id: string;
-  topic: string;
-  message: string;
-  creator_address: string;
-  created_at: BigNumber;
+export interface Voting {
+  voting: string;
+  name: string;
+  description: string;
 }
 
 const useMainVotingContract = () => {
@@ -21,14 +19,12 @@ const useMainVotingContract = () => {
   // passed as a prop to the WagmiProvider.
   const provider = useProvider();
 
-  console.log("signer data", signer.data)
-
   // This returns a new ethers.Contract ready to interact with our comments API.
   // We need to pass in the address of our deployed contract as well as its abi.
   // We also pass in the signer if there is a signed in wallet, or if there's
   // no signed in wallet then we'll pass in the connected provider.
   const contract = wagmi.useContract({
-    addressOrName: "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+    addressOrName: `${process.env.NEXT_PUBLIC_MAIN_VOTING_ADDRESS}`,
     contractInterface: MainVotingABI.abi,
     signerOrProvider: signer.data || provider,
   });
@@ -49,16 +45,16 @@ const useMainVotingContract = () => {
 //     await tx.wait();
 //   };
 
-  const getBallots = async (): Promise<string[]> => {
+  const getBallots = async (): Promise<Voting[]> => {
     const items = await contract.ballotId();
     const count = parseInt(items.toHexString());
-    const ballotAddresses = [];
+    const ballots = [];
 
     for (let i = 0; i < count; i++) {
       const item = await contract.ballots(i);
-      ballotAddresses.push(item);
+      ballots.push(item);
     }
-    return ballotAddresses;
+    return ballots;
   }
 
   return {

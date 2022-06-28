@@ -3,10 +3,6 @@ import { useQuery } from "react-query";
 import useMainVotingContract from "../../hooks/useMainVotingContract";
 import Link from "next/link";
 import NewBallot from "./New";
-import useVotingContract from "../../hooks/useVotingContract";
-import { useContract } from "wagmi";
-import VotingABI from "../../artifacts/contracts/Voting.sol/Voting.json";
-import { useEffect } from "react";
 
 const VotingList = () => {
   const ballotContract = useMainVotingContract();
@@ -14,38 +10,7 @@ const VotingList = () => {
   const { data: ballots } = useQuery(["ballots", { chainId: ballotContract.chainId }], () =>
     ballotContract.getBallots()
   );
-  console.log("count is ", ballots);
-
-  if (ballots && ballots.length) {
-    const votingContract = useVotingContract(ballots);
-    
-    const { data: votingList } = useQuery(
-      ['votingList', { ballots, chainId: ballotContract.chainId }],
-      () => votingContract.getVotingList(ballots),
-    );
-    console.log("voting is ", votingList);
-  }
-
-  const polls = [
-    {
-      id: 1,
-      name: "What is the best day of the week?",
-      description: "Lets see what is the best day of the week",
-      isOpen: true,
-    },
-    {
-      id: 1,
-      name: "What is the best month?",
-      description: "Lets see what is the best month",
-      isOpen: false,
-    },
-    {
-      id: 1,
-      name: "Best animal?",
-      description: "What is the best Animal?",
-      isOpen: true,
-    },
-  ];
+  console.log("ballots are ", ballots);
 
   return (
     <div className="text-center flex relative justify-center items-center flex-col m-auto mt-[60px]">
@@ -63,27 +28,23 @@ const VotingList = () => {
             <tr>
               <th>Name</th>
               <th>Description</th>
-              <th>Status</th>
+              <th>Explore</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {polls.map((p, i) => (
-              <tr tabIndex={i}>
+            {ballots?.map((p, i) => (
+              <tr tabIndex={i} key={i}>
                 <td>{p.name}</td>
                 <td>{p.description}</td>
                 <td>
-                  <span
-                    className={`badge badge-sm ${
-                      p.isOpen ? "badge-success" : "badge-warning"
-                    }`}
-                  >
-                    {p.isOpen ? "Open" : "Closed"}
-                  </span>
+                  <a href={`https://etherscan.io/contracts/${p.voting}`} target="_blank">
+                    <button className="btn btn-primary btn-xs">View</button>
+                  </a>
                 </td>
                 <td>
-                  <Link href={`/ballots/${i}`}>
-                    <button className="btn btn-primary btn-xs">View</button>
+                  <Link href={`/ballots/${p.voting}`}>
+                    <button className="btn btn-success btn-xs">Vote</button>
                   </Link>
                 </td>
               </tr>

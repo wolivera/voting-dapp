@@ -72,8 +72,8 @@
       ]
     },
     "/Users/williams/Documents/Zircon/VotingDapp-Frontend/contracts/MainVoting.sol": {
-      "lastModificationDate": 1656100144313,
-      "contentHash": "96f4a606441e3ad0907cd92ae9c92328",
+      "lastModificationDate": 1656425563435,
+      "contentHash": "bfd1d099ba6580bf6454b799a930cac4",
       "sourceName": "contracts/MainVoting.sol",
       "solcConfig": {
         "version": "0.8.4",
