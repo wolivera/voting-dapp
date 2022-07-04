@@ -1,16 +1,20 @@
-import Loading from "../Loading";
 import { useQuery } from "react-query";
 import useMainVotingContract from "../../hooks/useMainVotingContract";
 import Link from "next/link";
 import NewBallot from "./New";
+import { useIsMounted } from "../../hooks/useIsMounted";
+import { LoadingCover } from "../Loading";
+import useGetBallots from "../../hooks/useGetBallots";
 
 const VotingList = () => {
-  const ballotContract = useMainVotingContract();
+  // const isMounted = useIsMounted();
+  
+  const query = useGetBallots();
+  // console.log('ballots', ballots);
 
-  const { data: ballots } = useQuery(["ballots", { chainId: ballotContract.chainId }], () =>
-    ballotContract.getBallots()
-  );
-  console.log("ballots are ", ballots);
+  if (query.isLoading) {
+    return <div>HOLA</div>
+  }
 
   return (
     <div className="text-center flex relative justify-center items-center flex-col m-auto mt-[60px]">
@@ -33,7 +37,7 @@ const VotingList = () => {
             </tr>
           </thead>
           <tbody>
-            {ballots?.map((p, i) => (
+            {query.data?.map((p, i) => (
               <tr tabIndex={i} key={i}>
                 <td>{p.name}</td>
                 <td>{p.description}</td>

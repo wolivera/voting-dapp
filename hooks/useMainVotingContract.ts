@@ -1,6 +1,5 @@
 import * as wagmi from "wagmi";
-import { chainId, useProvider, useSigner } from "wagmi";
-import { BigNumber, utils } from "ethers";
+import { useProvider, useSigner } from "wagmi";
 // Import our contract ABI (a json representation of our contract's public interface).
 // The hardhat compiler writes this file to artifacts during compilation.
 import MainVotingABI from "../artifacts/contracts/MainVoting.sol/MainVoting.json";
@@ -37,14 +36,6 @@ const useMainVotingContract = () => {
 //     });
 //   };
 
-//   // Wrapper to add types to our addComment function.
-//   const addComment = async (topic: string, message: string): Promise<void> => {
-//     // Create a new transaction
-//     const tx = await contract.addComment(topic, message);
-//     // Wait for transaction to be mined
-//     await tx.wait();
-//   };
-
   const getBallots = async (): Promise<Voting[]> => {
     const items = await contract.ballotId();
     const count = parseInt(items.toHexString());
@@ -57,10 +48,18 @@ const useMainVotingContract = () => {
     return ballots;
   }
 
+  const addVoting = async (title: string, description: string): Promise<any> => {
+    // Create a new transaction
+    const tx = await contract.createBallot(title, description);
+    // Wait for transaction to be mined
+    await tx.wait();
+  }
+
   return {
     contract,
     chainId: contract.provider.network?.chainId,
-    getBallots
+    getBallots,
+    addVoting
   };
 };
 

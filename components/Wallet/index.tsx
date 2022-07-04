@@ -1,47 +1,27 @@
-import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
-import { useAccount, useConnect, useDisconnect, useBalance } from "wagmi";
+import { useAccount, useConnect, useDisconnect, useBalance, useNetwork } from "wagmi";
 import { useIsMounted } from "../../hooks/useIsMounted";
-import { formatAddress } from "../../web3/utils";
+import { formatAddress, getChainId } from "../../web3/utils";
 
 const Wallet = () => {
-  const { data: accountData } = useAccount();
+  const { data: accountData, isFetching } = useAccount();
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   const { data: balanceData } = useBalance({
     addressOrName: accountData?.address,
   });
-
   const isMounted = useIsMounted();
-  // const [requested, setRequested] = useState(false);
+  const { activeChain } = useNetwork();
 
-  // useEffect(() => {
-  //   const checkNetwork = async () => {
-  //     setRequested(true);
-  //     if (window.ethereum) {
-  //       const currentChainId = await window.ethereum.request({
-  //         method: "eth_chainId",
-  //       });
-
-  //       if (currentChainId !== connectors[0].chains[0].name && !requested) {
-  //         throw Error("Wrong Network");
-  //       }
-  //     }
-  //   };
-
-  //   if (accountData?.address) {
-  //     checkNetwork().catch(async () => {
-  //       if (!requested) {
-  //         const res = await changeNetwork(connectors[0].chains[0]);
-  //         res && connect(connectors[0]);
-  //       }
-  //     });
-  //   }
-  // }, [accountData]);
+  const isValidChain = !!(activeChain && activeChain.id === getChainId());
+  if (isMounted && accountData && !isFetching && !isValidChain) {
+    toast.error('Opps, wrong network!! Switch to Polygon Mumbai Testnet', { id: 'NETWORK_ERROR' });
+  }
 
   return (
     <div>
-      {accountData && isMounted ? (
+      {accountData && isMounted && isValidChain ? (
         <div className="flex justify-around items-center text-center space-x-5">
           <div className="flex items-center justify-between space-x-4">
             <span className="font-bold text-base text-xl">

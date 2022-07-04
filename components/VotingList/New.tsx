@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import useAddVoting from "../../hooks/useAddVoting";
 
 const NewBallot = () => {
   const {
@@ -8,7 +11,26 @@ const NewBallot = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any) => console.log(data);
+  const [data, setData] = useState({ title: '', description: '' });
+  const mutation = useAddVoting();
+
+  const onSubmit = () => {
+    console.log(data);
+    mutation
+      .mutateAsync({
+        title: data.title,
+        description: data.description,
+      })
+      .then(() => {
+        toast.success('Voting created successfully', { id: 'VOTING_CREATED' });
+        (document.getElementById("new") as any).checked = false;
+        setData({ title: '', description: '' });
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error('Oops there was an error creating your voting', { id: 'VOTING_ERROR' })
+      });
+  };
 
   return (
     <div className="modal">
@@ -27,6 +49,7 @@ const NewBallot = () => {
             </label>
             <input
               {...register("title", { required: true })}
+              onChange={(e) => setData({ description: data.description, title: e.target.value })}
               type="text"
               placeholder="Enter a title for your ballot"
               className="input input-bordered w-full max-w-xs"
@@ -41,6 +64,7 @@ const NewBallot = () => {
             </label>
             <input
               {...register("description", { required: true })}
+              onChange={(e) => setData({ title: data.title, description: e.target.value })}
               type="text"
               placeholder="Enter a description for your ballot"
               className="input input-bordered w-full max-w-xs"
