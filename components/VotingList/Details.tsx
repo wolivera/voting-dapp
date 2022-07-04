@@ -1,5 +1,4 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import toast from "react-hot-toast";
 import { useQuery } from "react-query";
 import useVotingContract from "../../hooks/useVotingContract";
 import { LoadingCover } from "../Loading";
@@ -10,7 +9,6 @@ interface Params {
 }
 
 const Details = ({ id }: Params) => {
-  console.log("params", id);
 
   const contract = useVotingContract(id);
   const { data: voting } = useQuery(
@@ -19,7 +17,10 @@ const Details = ({ id }: Params) => {
   );
 
   if (!voting) return <LoadingCover />;
-  console.log('voting ', voting)
+
+  const onSubmit = () => {
+    alert('Voted For')
+  };
 
   return (
     <div className="text-center flex justify-center items-center flex-col m-auto mt-[60px] relative">
@@ -28,17 +29,16 @@ const Details = ({ id }: Params) => {
         <h4>{voting?.description}</h4>
       </div>
 
-      {!voting?.options?.length && (
-        <div className="mt-8">
-          <label htmlFor="new-option" className="btn modal-button">
-            Add Option
-          </label>
-          <input type="checkbox" id="new-option" className="modal-toggle" />
-          <NewOption id={id} />
-        </div>
-      )}
+      <div className="mt-8">
+        <label htmlFor="new-option" className="btn modal-button">
+          Add Option
+        </label>
+        <input type="checkbox" id="new-option" className="modal-toggle" />
+        <NewOption id={id} />
+      </div>
+
       <div className="flex mt-8">
-        {voting?.options?.map((o) => (
+        {voting?.options?.map((o: any) => (
           <div className="card w-96 bg-base-100 shadow-xl mr-3">
             <div className="card-body">
               <h2 className="card-title">{o.name}</h2>

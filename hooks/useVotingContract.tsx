@@ -41,7 +41,11 @@ const useVotingContract = (address: string) => {
 
     for (let i = 0; i < count; i++) {
       const item = await contract.votingOptions(i);
-      options.push(item);
+      console.log('item i s', item);
+      options.push({
+        voteCount: parseInt(item.voteCount.toHexString()),
+        name: item.name,
+      });
     }
 
     return {

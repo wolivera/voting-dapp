@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -13,6 +14,7 @@ const NewOption = ({ id }: { id: string }) => {
 
   const [data, setData] = useState({ description: '' });
   const mutation = useAddVotingOption(id);
+  const router = useRouter();
 
   const onSubmit = () => {
     console.log(data);
@@ -24,6 +26,7 @@ const NewOption = ({ id }: { id: string }) => {
         toast.success('Voting created successfully', { id: 'VOTING_OPTION_CREATED' });
         (document.getElementById("new-option") as any).checked = false;
         setData({ description: '' });
+        router.push('/');
       })
       .catch((err) => {
         console.error(err);
@@ -48,6 +51,7 @@ const NewOption = ({ id }: { id: string }) => {
             </label>
             <input
               {...register("description", { required: true })}
+              onChange={(e) => setData({ description: e.target.value })}
               type="text"
               placeholder="Enter a description for your option"
               className="input input-bordered w-full max-w-xs"
