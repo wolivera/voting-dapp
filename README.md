@@ -2,10 +2,7 @@
   <img src="https://zirconassets.s3.amazonaws.com/Screen+Shot+2022-07-04+at+15.16.04.png" width="400" style="text-align:center;" />
  </p>
 
-ZVoting is a Voting dApp that demonstrates a pure blockchain based Voting descentralized system. This app supports multiple ballots at the same time through the usage of a parent MainVoting contract and a particular Voting contract that keeps track of individual Votings and its options. A React UI is also present in this repo to interact with such Smart Contracts through Metamask. 
-
-<img src="https://zirconassets.s3.amazonaws.com/Jul-04-2022+16-10-46.gif" width="600" />
-
+<i>ZVoting</i> is a Voting dApp that demonstrates a pure blockchain based Voting descentralized system. This app supports multiple ballots at the same time through the usage of a parent MainVoting contract and a particular Voting contract that keeps track of individual Votings and its options. A React UI is also present in this repo to interact with such Smart Contracts through Metamask. 
 
 ## Build locally
 
@@ -29,3 +26,9 @@ Start the dApp
 $ yarn run dev
 ```
 
+## Demo
+
+<p align="center">
+  <img src="https://zirconassets.s3.amazonaws.com/Jul-04-2022+16-10-46.gif" width="600" />
+  <img src="https://zirconassets.s3.amazonaws.com/Jul-04-2022+16-13-25.gif" width="600" />
+</p>
