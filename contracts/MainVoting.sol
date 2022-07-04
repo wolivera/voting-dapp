@@ -17,7 +17,7 @@ contract MainVoting {
     mapping (uint => Ballot) public ballots;
 
     function createBallot (string memory _name, string memory _description) public {
-        Voting voting = new Voting(_name, _description, 10);
+        Voting voting = new Voting(_name, _description, 10, msg.sender);
         ballots[ballotId] = Ballot({
             voting: address(voting),
             name: _name,

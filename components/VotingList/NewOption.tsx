@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import useAddVotingOption from "../../hooks/useAddVotingOption";
 
-const NewOption = () => {
+const NewOption = ({ id }: { id: string }) => {
   const {
     register,
     handleSubmit,
@@ -8,7 +11,25 @@ const NewOption = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any) => console.log(data);
+  const [data, setData] = useState({ description: '' });
+  const mutation = useAddVotingOption(id);
+
+  const onSubmit = () => {
+    console.log(data);
+    mutation
+      .mutateAsync({
+        description: data.description,
+      })
+      .then(() => {
+        toast.success('Voting created successfully', { id: 'VOTING_OPTION_CREATED' });
+        (document.getElementById("new-option") as any).checked = false;
+        setData({ description: '' });
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error('Oops there was an error creating your voting', { id: 'VOTING_OPTION_ERROR' })
+      });
+  };
 
   return (
     <div className="modal">

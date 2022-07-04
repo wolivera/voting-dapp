@@ -2,8 +2,7 @@
 pragma solidity ^0.8.0;
 
 contract Voting {
-    address public owner = msg.sender;
-
+    address public owner;
     string public name;
     string public description;
     bool public isOpen;
@@ -47,10 +46,11 @@ contract Voting {
         _;
     }
 
-    constructor(string memory _name, string memory _description, uint _maxOptions) {
+    constructor(string memory _name, string memory _description, uint _maxOptions, address _owner) {
         name = _name;
         description = _description;
         maxOptions = _maxOptions;
+        owner = _owner;
     }
 
     function openVotation() public adminOnly {

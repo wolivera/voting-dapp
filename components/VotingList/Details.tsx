@@ -17,10 +17,9 @@ const Details = ({ id }: Params) => {
     ["details", { chainId: contract.chainId }],
     () => contract.getDetails()
   );
-  console.log("voting is ", voting);
-  console.log("id", id);
 
   if (!voting) return <LoadingCover />;
+  console.log('voting ', voting)
 
   return (
     <div className="text-center flex justify-center items-center flex-col m-auto mt-[60px] relative">
@@ -35,7 +34,7 @@ const Details = ({ id }: Params) => {
             Add Option
           </label>
           <input type="checkbox" id="new-option" className="modal-toggle" />
-          <NewOption />
+          <NewOption id={id} />
         </div>
       )}
       <div className="flex mt-8">

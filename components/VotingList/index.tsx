@@ -1,19 +1,14 @@
-import { useQuery } from "react-query";
-import useMainVotingContract from "../../hooks/useMainVotingContract";
 import Link from "next/link";
 import NewBallot from "./New";
-import { useIsMounted } from "../../hooks/useIsMounted";
 import { LoadingCover } from "../Loading";
 import useGetBallots from "../../hooks/useGetBallots";
+import { useEffect } from "react";
 
 const VotingList = () => {
-  // const isMounted = useIsMounted();
-  
   const query = useGetBallots();
-  // console.log('ballots', ballots);
 
   if (query.isLoading) {
-    return <div>HOLA</div>
+    return <LoadingCover />
   }
 
   return (

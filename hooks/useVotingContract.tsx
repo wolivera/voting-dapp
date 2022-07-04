@@ -51,9 +51,17 @@ const useVotingContract = (address: string) => {
     }
   };
 
+  const addVotingOption = async (description: string): Promise<void> => {
+    // Create a new transaction
+    const tx = await contract.addVotingOption(description);
+    // Wait for transaction to be mined
+    await tx.wait();
+  };
+
   return {
     chainId: provider.network?.chainId,
     getDetails,
+    addVotingOption,
   };
 };
 

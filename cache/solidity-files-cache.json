@@ -37,8 +37,8 @@
       ]
     },
     "/Users/williams/Documents/Zircon/VotingDapp-Frontend/contracts/Voting.sol": {
-      "lastModificationDate": 1655843949209,
-      "contentHash": "54c899ebf13bd0834afb380a5a4d497d",
+      "lastModificationDate": 1656949671175,
+      "contentHash": "caeae59b31726b0ed7fc32ff845631b6",
       "sourceName": "contracts/Voting.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -72,8 +72,8 @@
       ]
     },
     "/Users/williams/Documents/Zircon/VotingDapp-Frontend/contracts/MainVoting.sol": {
-      "lastModificationDate": 1656425563435,
-      "contentHash": "bfd1d099ba6580bf6454b799a930cac4",
+      "lastModificationDate": 1656949673253,
+      "contentHash": "2d9eb1405b6db3026ce14524f78cef0f",
       "sourceName": "contracts/MainVoting.sol",
       "solcConfig": {
         "version": "0.8.4",
